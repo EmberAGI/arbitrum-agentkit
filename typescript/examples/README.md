@@ -1,14 +1,18 @@
 ## Introduction
 
-This section contains example implementations of on-chain AI agents that demonstrate how they are easily built and deployed using the Arbitrum Agentkit. These agents act as MCP tools for compatibility with any system, a common approach in widely used technical references. In the coming months, they will be eligible for listing in MCP registries as part of the Agentkit-agent creation process.
+This section contains example implementations of on-chain AI agents, illustrating how they are easily built and deployed using the Arbitrum Agentkit. These agents act as MCP tools for compatibility with any system.
 
-## Set Up Your Project
+## Setting Up Your Project
 
-### 1. Environment Setup:
+To run an agent, you need to first set up your project by following these steps:
 
-Copy the `.env.example` file to `.env` in your agent's directory and fill in any required secrets or configuration variables.
+### 1. Setup Environment :
+
+Copy the contents of `.env.example` into the `.env` file in your agent's directory and fill in any required secrets or configuration variables.
 
 ### 2. Install Packages:
+
+Install the necessary packages by running the following command:
 
 ```bash
 pnpm install
@@ -43,9 +47,11 @@ Build the MCP-enabled Docker image in the agent's directory and run the containe
 
 ## Graphical MCP Clients
 
-Although the above examples primarily demonstrate command-line interactions, you can integrate a graphical MCP client as well:
+Although the above examples primarily demonstrate command-line interactions, you can also integrate agents into graphical MCP clients such as:
 
-1. **Cursor**: To incorporate an agent into Cursor, update the configuration by editing the `mcp.json` file. Within this file, add an entry under the `mcpServers` key that defines the agent’s settings depending on whether you are setting up a local or remote agent. Cursor can point to the SSE MCP server running on Docker, or directly to the build file for npx. The contents of the `mcp.json` file follow this structure:
+### 1. Cursor
+
+Cursor is designed for lightweight command-line interactions. To integrate an agent into Cursor, update the configuration by editing the `mcp.json` file. Add an entry under the `mcpServers` key to define the agent’s settings. Cursor can run an agent via a local command (using npx) or point directly to an SSE (Server-Sent Events) endpoint. The contents of the `mcp.json` file follow this structure:
 
 ```json
 {
@@ -70,7 +76,11 @@ Although the above examples primarily demonstrate command-line interactions, you
 }
 ```
 
-2. **Claude Desktop**: To incorporate an agent into Claude Desktop, update the configuration by editing the `claude_desktop_config.json` file. Within this file, add an entry under the `mcpServers` key that defines the agent’s settings depending on whether you are setting up a local or remote agent. Claude Desktop can point to the SSE MCP server running on Docker, or directly to the build file for npx. The contents of the `claude_desktop_config.json` file follow this structure:
+For detailed guidance on configuring MCP for Cursor, refer to https://docs.cursor.com/context/model-context-protocol.
+
+### 2. Claude Desktop
+
+Claude Desktop supports similar agent configurations as Cursor but also includes additional settings, such as filesystem access, which enhances its capability to work with local directories. To integrate an agent into Claude Desktop, update the configuration by editing the `claude_desktop_config.json` file. Add an entry under the `mcpServers` key to define the agent’s settings. Claude Desktop can run an agent via a local command (using npx) or point directly to an SSE (Server-Sent Events) endpoint. The contents of the `claude_desktop_config.json` file follow this structure:
 
 ```json
 {
@@ -107,3 +117,34 @@ Although the above examples primarily demonstrate command-line interactions, you
   }
 }
 ```
+
+For detailed guidance on configuring MCP for Claude Desktop, refer to https://modelcontextprotocol.io/quickstart/user.
+
+### 3. Windsurf
+
+Windsurf offers a rich graphical interface and integrates its MCP configurations either through a configuration file named `windsurf_config.json` or via its built-in Settings panel. Windsurf’s configuration process often involves UI-based adjustments, but the contents of the `windsurf_config.json` file follows this structure:
+
+```json
+{
+  "mcpServers": {
+    "local-npx-agent": {
+      "command": "npx",
+      "args": ["/path/to/agent/build/dist/index.js"],
+      "env": {
+        "VAR": "value"
+      }
+    },
+    "local-sse-agent": {
+      "url": "http://localhost:3010/sse",
+      "env": {
+        "VAR": "value"
+      }
+    },
+    "remote-sse-agent": {
+      "url": "http://173.230.139.151:3010/sse"
+    }
+  }
+}
+```
+
+For detailed guidance on configuring MCP for Windsurf, refer to https://docs.windsurf.com/windsurf/mcp.
