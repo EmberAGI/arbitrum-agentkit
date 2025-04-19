@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  pendle-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - RPC_URL=${RPC_URL}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - MNEMONIC=${MNEMONIC}
+      - QUICKNODE_SUBDOMAIN=${QUICKNODE_SUBDOMAIN}
+      - QUICKNODE_API_KEY=${QUICKNODE_API_KEY}
+      - PENDLE_API_KEY=${PENDLE_API_KEY}
+      - PENDLE_DEFAULT_CHAIN_ID=${PENDLE_DEFAULT_CHAIN_ID}
+    restart: unless-stopped 
